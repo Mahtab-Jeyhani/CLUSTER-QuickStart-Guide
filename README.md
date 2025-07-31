@@ -2,7 +2,7 @@
 # Lab Cluster Usage Guide
 
 Welcome to the lab cluster! This guide covers everything you need to know to get started with Slurm, interactive allocations, batch submissions, and resource requests (CPU, GPU). Use this as your quick reference for day-to-day work on our HPC system.
-
+---
 ✨ Table of Contents ✨
 
 1. 🔑 [Accessing the Cluster](#accessing-the-cluster)
@@ -32,6 +32,7 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
    ssh your_username@lab.cluster.domain.edu
 
 ---
+
 ## Environment Modules & Conda
 
 ### Modules

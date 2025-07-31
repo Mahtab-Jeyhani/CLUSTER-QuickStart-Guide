@@ -1,326 +1,168 @@
-````markdown
-# Lab Cluster Usage Guide
+# 💻 UH Lab Cluster Usage Guide
 
-Welcome to the lab cluster! This guide covers everything you need to know to get started with Slurm, interactive allocations, batch submissions, and resource requests (CPU, GPU). Use this as your quick reference for day-to-day work on our HPC system.
-
----
-
-## ✨ Table of Contents ✨
-
-1. 🔑 [Accessing the Cluster](#accessing-the-cluster)
-2. 📦 [Environment Modules & Conda](#environment-modules--conda)
-3. 🖥️ [Interactive Sessions](#interactive-sessions)
-   - 🏃 [salloc](#salloc)
-   - 🚀 [srun](#srun)
-4. 📋 [Batch Submissions](#batch-submissions)
-   - 📨 [sbatch](#sbatch)
-   - 📝 [Job Script Template](#job-script-template)
-5. ⚙️ [Resource Requests](#resource-requests)
-   - 🧮 [CPU](#cpu)
-   - 🎮 [GPU](#gpu)
-   - 💾 [Memory](#memory)
-   - ⏱️ [Time](#time)
-6. 🔍 [Managing Jobs](#managing-jobs)
-7. 📂 [Logs and Output Files](#logs-and-output-files)
-8. 📊 [Useful Slurm Commands](#useful-slurm-commands)
-9. 🌐 [Environment Variables](#environment-variables)
-10. 🚧 [Example Workflows](#example-workflows)
-11. 🛠️ [Troubleshooting](#troubleshooting)
-12. 🌟 [Best Practices](#best-practices)
+Welcome to the UH Lab Cluster! This guide helps you get started with accessing the cluster, submitting jobs, using SLURM, GPUs, Python environments, and more.
 
 ---
 
-🔑 Accessing the Cluster
+## 📚 Table of Contents
 
-SSH into the login node:
+* [🔑 Accessing the Cluster](#-accessing-the-cluster)
+* [📁 File Transfers & Permissions](#-file-transfers--permissions)
+* [⚙️ SLURM Basics](#️-slurm-basics)
+* [🚀 Running Jobs with sbatch](#-running-jobs-with-sbatch)
+* [🖥️ Interactive Jobs with salloc](#️-interactive-jobs-with-salloc)
+* [🎮 GPU & CPU Requests](#-gpu--cpu-requests)
+* [🐍 Python Environment Setup (conda)](#-python-environment-setup-conda)
+* [🧠 Setting CUDA\_VISIBLE\_DEVICES](#-setting-cuda_visible_devices)
 
+---
+
+## 🔑 Accessing the Cluster
+
+1. **SSH into the login node**:
+
+   ```bash
    ssh your_username@lab.cluster.domain.edu
-
-
----
-
-## Environment Modules & Conda
-
-### Modules
-
-Use the module system to load system-managed software:
-
-```sh
-module avail              # list available modules
-module load python/3.12    # load Python 3.12
-module list               # show loaded modules
-```
-
-Unload when done:
-
-```sh
-module unload python/3.12
-```
-
-### Conda Environments
-
-For custom Python setups, use Conda:
-
-```sh
-module load anaconda3            # load Anaconda base
-conda create --name myenv python=3.12  # create env with Python 3.12
-conda activate myenv             # activate environment
-conda install numpy scipy        # install packages
-```
-
-Freeze dependencies:
-
-```sh
-conda env export > environment.yml
-```
+   ```
 
 ---
 
-## Interactive Sessions
+## 📁 File Transfers & Permissions
 
-### salloc
+### Copy Files to/from the Cluster
 
-Request an interactive allocation:
+* **Copy files to cluster**:
 
-```sh
-salloc --nodes=1 --ntasks=1 \
-       --cpus-per-task=4 --mem=16G \
-       --gres=gpu:1 --time=02:00:00
-```
+  ```bash
+  scp your_file.py your_username@lab.cluster.domain.edu:~/target_folder/
+  ```
+* **Copy files from cluster**:
 
-Once allocated, move to a shell:
+  ```bash
+  scp your_username@lab.cluster.domain.edu:~/target_folder/output.log ./
+  ```
 
-```sh
-bash
-```
+### File Permissions
 
-### srun
+* **Give read permission to your group**:
 
-Spawn an interactive shell directly:
-
-```sh
-srun --pty --nodes=1 --cpus-per-task=4 \
-     --mem=16G --gres=gpu:1 --time=02:00:00 bash
-```
+  ```bash
+  chmod g+r your_file.py
+  ```
 
 ---
 
-## Batch Submissions
+## ⚙️ SLURM Basics
 
-### sbatch
+* Check node availability:
 
-Submit a job script:
+  ```bash
+  sinfo
+  ```
+* Check your jobs:
 
-```sh
-sbatch job_script.sh
-```
+  ```bash
+  squeue -u your_username
+  ```
+* Cancel a job:
 
-### Job Script Template
+  ```bash
+  scancel <job_id>
+  ```
+
+---
+
+## 🚀 Running Jobs with sbatch
+
+Example SLURM script (`run_job.sh`):
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=my_job
-#SBATCH --output=slurm-%j.out
-#SBATCH --error=slurm-%j.err
-#SBATCH --nodes=1
+#SBATCH --output=output.log
+#SBATCH --error=error.log
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
-#SBATCH --gres=gpu:1            # request GPU
+#SBATCH --time=02:00:00
 #SBATCH --partition=gpu
-#SBATCH --time=04:00:00
-
-# Load modules or conda
-module load python/3.12
-# or:
-# module load anaconda3
-# source activate myenv
-
-# Restrict visible GPUs
-export CUDA_VISIBLE_DEVICES=0
-
-srun python script.py --arg1 val1
-```
-
-Submit:
-
-```sh
-sbatch job_script.sh
-```
-
----
-
-## Resource Requests
-
-### CPU
-
-```sh
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-```
-
-### GPU
-
-```sh
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:2
-```
-
-### Memory
-
-```sh
-#SBATCH --mem=64G
-```
-
-### Time
-
-```sh
-#SBATCH --time=12:00:00
-```
-
----
-
-## Managing Jobs
-
-* **View jobs**:
-
-  ```sh
-  squeue -u $USER
-  ```
-* **Cancel job**:
-
-  ```sh
-  scancel <jobid>
-  ```
-* **Update pending job**:
-
-  ```sh
-  scontrol update JobId=<jobid> TimeLimit=10:00:00
-  ```
-
----
-
-## Logs and Output Files
-
-Defaults:
-
-* **STDOUT**: `slurm-<jobid>.out`
-* **STDERR**: `slurm-<jobid>.err`
-
-Custom paths:
-
-```sh
-#SBATCH --output=logs/%x-%j.out
-#SBATCH --error=logs/%x-%j.err
-```
-
----
-
-## Useful Slurm Commands
-
-* **Job accounting**:
-
-  ```sh
-  sacct -j <jobid>
-  ```
-* **Efficiency report**:
-
-  ```sh
-  seff <jobid>
-  ```
-* **Live stats**:
-
-  ```sh
-  sstat -j <jobid>.batch
-  ```
-
----
-
-## Environment Variables
-
-Set variables in scripts or interactively:
-
-```sh
-# Select GPU devices
-export CUDA_VISIBLE_DEVICES=0,1
-
-# Set thread count
-export OMP_NUM_THREADS=4
-```
-
----
-
-## Example Workflows
-
-### GPU Jupyter Notebook (Interactive)
-
-```sh
-salloc --nodes=1 --cpus-per-task=4 --mem=32G \
-       --gres=gpu:1 --time=2:00:00
+#SBATCH --gres=gpu:1
 
 module load anaconda3
 conda activate myenv
-jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser
+python my_script.py
 ```
 
-Port-forward locally:
-
-```sh
-ssh -N -L 8888:localhost:8888 your_username@lab.cluster.domain.edu
-```
-
-### Large Data Preprocessing (Batch)
+Submit the job:
 
 ```bash
-#!/bin/bash
-#SBATCH --job-name=preprocess
-#SBATCH --output=logs/preprocess-%j.out
-#SBATCH --cpus-per-task=12
-#SBATCH --mem=128G
-#SBATCH --time=06:00:00
-
-module load python/3.12
-export OMP_NUM_THREADS=12
-srun python preprocess.py --input bigdata.csv
-```
-
-Submit:
-
-```sh
-sbatch preprocess.sh
+sbatch run_job.sh
 ```
 
 ---
 
-## Troubleshooting
+## 🖥️ Interactive Jobs with salloc
 
-* **Pending too long?**
+Run an interactive session on a GPU node:
 
-  * Inspect: `scontrol show job <jobid>`
-  * Reduce resource requests
-
-* **Module errors?**
-
-  * Check `module avail`
-  * Confirm installed versions
-
-* **CUDA\_VISIBLE\_DEVICES not working?**
-
-  * Verify GPUs: `nvidia-smi`
-  * Confirm environment variable set before job launch
+```bash
+salloc --partition=gpu --gres=gpu:1 --mem=16G --cpus-per-task=4 --time=01:00:00
+```
 
 ---
 
-## Best Practices
+## 🎮 GPU & CPU Requests
 
-* Use **Git** for scripts and versioning.
-* Test interactively on small allocations.
-* Organize outputs: `logs/`, `results/`.
-* Document module versions and parameters.
-* Use **Conda** or `venv` for isolated environments.
-* Clean up old files and monitor quota.
+* Request specific GPUs:
+
+  ```bash
+  salloc --gres=gpu:A100:1
+  ```
+* Limit visible devices (e.g., in Python):
+
+  ```bash
+  export CUDA_VISIBLE_DEVICES=0
+  ```
 
 ---
 
-*For full documentation, consult the official HPC guide: [https://www.uh.edu/research/rcdc/support-and-services/user-guide/](https://www.uh.edu/research/rcdc/support-and-services/user-guide/)*
+## 🐍 Python Environment Setup (conda)
 
+Create a new Python 3.12 environment:
+
+```bash
+conda create -n myenv python=3.12
+```
+
+Activate the environment:
+
+```bash
+conda activate myenv
+```
+
+Install packages:
+
+```bash
+conda install numpy pandas matplotlib
+```
+
+---
+
+## 🧠 Setting CUDA\_VISIBLE\_DEVICES
+
+Use this environment variable to control GPU visibility:
+
+```bash
+export CUDA_VISIBLE_DEVICES=0,1
+```
+
+In Python:
+
+```python
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+```
+
+---
+
+Happy coding! 💻✨

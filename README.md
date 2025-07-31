@@ -26,12 +26,11 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 11. 🛠️ [Troubleshooting](#troubleshooting)
 12. 🌟 [Best Practices](#best-practices)
 
-✨ Accessing the Cluster:
+🔑  Accessing the Cluster:
 
 1. SSH into the login node:
-```sh
    ssh your_username@lab.cluster.domain.edu
-````
+
 
 ## Environment Modules & Conda
 

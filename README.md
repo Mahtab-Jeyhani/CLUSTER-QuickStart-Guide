@@ -1,6 +1,6 @@
-# 💻 Lab Cluster Usage Guide
+# 💻 Cluster Usage Guide
 
-Welcome to the Lab Cluster! This guide helps you get started with accessing the cluster, submitting jobs, using SLURM, GPUs, Python environments, and more.
+Welcome to the UH Lab Cluster! This guide helps you get started with accessing the cluster, submitting jobs, using SLURM, GPUs, Python environments, and more.
 
 ---
 
@@ -166,3 +166,11 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 ---
 
 Happy coding! 💻✨
+
+---
+
+## 📚 More Information
+
+For an in-depth user guide, visit the official UH RCDC Getting Started page:
+
+[https://www.uh.edu/research/rcdc/support-and-services/user-guide/getting-started-clusters.php](https://www.uh.edu/research/rcdc/support-and-services/user-guide/getting-started-clusters.php)

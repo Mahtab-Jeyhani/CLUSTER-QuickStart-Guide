@@ -5,28 +5,28 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 
 ---
 
-## Table of Contents
+## ✨ Table of Contents ✨
 
-1. [Accessing the Cluster](#accessing-the-cluster)
-2. [Environment Modules & Conda](#environment-modules--conda)
-3. [Interactive Sessions](#interactive-sessions)
-   - [salloc](#salloc)
-   - [srun](#srun)
-4. [Batch Submissions](#batch-submissions)
-   - [sbatch](#sbatch)
-   - [Job Script Template](#job-script-template)
-5. [Resource Requests](#resource-requests)
-   - [CPU](#cpu)
-   - [GPU](#gpu)
-   - [Memory](#memory)
-   - [Time](#time)
-6. [Managing Jobs](#managing-jobs)
-7. [Logs and Output Files](#logs-and-output-files)
-8. [Useful Slurm Commands](#useful-slurm-commands)
-9. [Environment Variables](#environment-variables)
-10. [Example Workflows](#example-workflows)
-11. [Troubleshooting](#troubleshooting)
-12. [Best Practices](#best-practices)
+1. 🔑 [Accessing the Cluster](#accessing-the-cluster)
+2. 📦 [Environment Modules & Conda](#environment-modules--conda)
+3. 🖥️ [Interactive Sessions](#interactive-sessions)
+   - 🏃 [salloc](#salloc)
+   - 🚀 [srun](#srun)
+4. 📋 [Batch Submissions](#batch-submissions)
+   - 📨 [sbatch](#sbatch)
+   - 📝 [Job Script Template](#job-script-template)
+5. ⚙️ [Resource Requests](#resource-requests)
+   - 🧮 [CPU](#cpu)
+   - 🎮 [GPU](#gpu)
+   - 💾 [Memory](#memory)
+   - ⏱️ [Time](#time)
+6. 🔍 [Managing Jobs](#managing-jobs)
+7. 📂 [Logs and Output Files](#logs-and-output-files)
+8. 📊 [Useful Slurm Commands](#useful-slurm-commands)
+9. 🌐 [Environment Variables](#environment-variables)
+10. 🚧 [Example Workflows](#example-workflows)
+11. 🛠️ [Troubleshooting](#troubleshooting)
+12. 🌟 [Best Practices](#best-practices)
 
 ---
 

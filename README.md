@@ -28,7 +28,8 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 11. 🛠️ [Troubleshooting](#troubleshooting)
 12. 🌟 [Best Practices](#best-practices)
 
----
+
+````markdown
 ---
 ## Accessing the Cluster
 

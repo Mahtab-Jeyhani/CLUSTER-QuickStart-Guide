@@ -30,18 +30,12 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 
 ---
 
-## 🔑 Accessing the Cluster
+🔑 Accessing the Cluster
 
-1. **SSH into the login node**:
-   ```bash
+SSH into the login node:
+
    ssh your_username@lab.cluster.domain.edu
-````
 
-2. **Change to your project directory**:
-
-   ```bash
-   cd ~/projects/my_project
-   ```
 
 ---
 

@@ -31,7 +31,7 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 1. SSH into the login node:
    ssh your_username@lab.cluster.domain.edu
 
-
+---
 ## Environment Modules & Conda
 
 ### Modules

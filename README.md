@@ -1,6 +1,6 @@
-# 💻 UH Lab Cluster Usage Guide
+# 💻 Lab Cluster Usage Guide
 
-Welcome to the UH Lab Cluster! This guide helps you get started with accessing the cluster, submitting jobs, using SLURM, GPUs, Python environments, and more.
+Welcome to the Lab Cluster! This guide helps you get started with accessing the cluster, submitting jobs, using SLURM, GPUs, Python environments, and more.
 
 ---
 

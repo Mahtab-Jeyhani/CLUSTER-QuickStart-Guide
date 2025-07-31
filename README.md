@@ -33,7 +33,7 @@ Welcome to the lab cluster! This guide covers everything you need to know to get
 ## Accessing the Cluster
 
 1. **SSH into the login node**:
-   ```sh
+```sh
    ssh your_username@lab.cluster.domain.edu
 ````
 
